@@ -6,6 +6,11 @@ Checkout the code to either of your library directories:
 	$ cd my/li3/project/
 	$ git submodule add https://github.com/kyhikari/li3_facebook.git libraries/li3_facebook
 
+Update submodules
+
+	$ cd libraries/li3_facebook
+	$ git submodule update --init
+
 Include the library in in your `/app/config/bootstrap/libraries.php`
 
 	Libraries::add('li3_facebook', array(
@@ -17,25 +22,29 @@ Include the library in in your `/app/config/bootstrap/libraries.php`
 
 ## Usage
 
-### Auth
-This library contains an auth adapter and a helper to make use of the official facebook php sdk.
+### Facebok Api
+Use the `FacebookProxy` class
 
-To use the auth adapter simply add it to your auth config like this:
+	use li3_facebook\extensions\FacebookProxy;
 
-	Auth::config(array(
-		'facebook' => array('adapter' => 'Facebook')
-	));
+And you can use the static calls to use the original methods from the Facebook API
 
-So you can check exchange the code for the actual request token using:
-
-	$user = Auth::check('facebook', $this->request);
+	$user = FacebookProxy::api('/me');
 
 ### Helper
 The helper is fairly simple to use, it can use all the methods used on the official facebook sdk as it can generate the links for login and logout with `loginUrl` and `logoutUrl`
 
+	$this->facebook->loginUrl('Login with Facebook.', array('scope' => 'email'));
+
+If you only need the url to redirect the user yourself you can use:
+
+	$url = $this->facebook->getLoginUrl($params);
+
 Also, you can embed the js sdk with the method `javascriptSdk`
 
+	$this->facebook->javascriptSdk();
+
 ## Credits
-This work is kind of based on:
+This work is based on:
 
 [tmaiaroto/li3_facebook](https://github.com/tmaiaroto/li3_facebook)

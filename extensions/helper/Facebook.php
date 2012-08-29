@@ -12,8 +12,8 @@ class Facebook extends \lithium\template\helper\Html {
 		return $this->link($title, $url, $options);
 	}
 
-	public function logoutUrl($title, array $options = array()) {
-		$url = FacebookProxy::getLogoutUrl();
+	public function logoutUrl($title, array $params = array(), array $options = array()) {
+		$url = FacebookProxy::getLogoutUrl($params);
 		return $this->link($title, $url, $options);
 	}
 
